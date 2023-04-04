@@ -12,12 +12,15 @@ import java.rmi.*;
  */
 public class VotingServer {
     private static boolean DEBUG = true;
-    private BufferedReader stdIn = new BufferedReader(
-        new InputStreamReader(System.in) );
     private static int port;
     private static String registryURL;
+    private static BufferedReader stdIn = new BufferedReader(
+        new InputStreamReader(System.in) 
+    );
     
-    private static void parseArgs (String args[]) { 
+    private static void parseArgs (String args[]) {
+        boolean pSet = false;
+
         // process flags
         int i = 0;
         while (i < args.length && args[i].startsWith("-")) {
@@ -28,16 +31,25 @@ public class VotingServer {
                 case 'p':
                     port = Integer.parseInt(args[i+1]);
                     i += 2;
-                    break;
-                case 'r':
-                    registryURL = args[i + 1];
-                    i += 2;
+                    pSet = true;
                     break;
                 default:
                     i++;
                     break;
             }
         }
+
+        // if an arguement was not already entered
+        try {
+            if (!pSet) {
+                System.out.print("Please enter a port number: ");
+                String in = stdIn.readLine();
+                port = Integer.parseInt(in);
+                pSet = true;
+            }
+        } catch (IOException ioe) { 
+            System.out.println("Invalid input");
+        }  
     }
 
     private static void startRegistry () throws RemoteException {
@@ -60,11 +72,8 @@ public class VotingServer {
 
     public static void main (String args[]) {
         parseArgs(args);
-        if (DEBUG) {
-             System.out.println("Port: " + port);
-            System.out.println("IP Address: " + registryURL);
-            System.out.println("done");
-        }
+        if (DEBUG)
+            System.out.println("Port: " + port);
 
         try {
             VotingImplementation vi = new VotingImplementation();
@@ -75,9 +84,9 @@ public class VotingServer {
             listRegistry();
             System.out.println("Server ready.");
         }
-        catch (Exception re) {
-            re.getCause();
-            re.printStackTrace();
+        catch (Exception e) {
+            e.getCause();
+            e.printStackTrace();
             return;
         }
     } // end main

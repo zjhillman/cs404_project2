@@ -7,6 +7,6 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
     }
 
     public String sayHello(String phrase) throws RemoteException{
-        return "I heard" + phrase;
+        return "Hello, " + phrase;
     }
 }
