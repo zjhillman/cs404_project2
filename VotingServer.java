@@ -1,7 +1,9 @@
 import java.io.*;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.*;
 
 /*
  * This class is the server to host the pull using java
@@ -13,7 +15,7 @@ public class VotingServer {
     private BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in) );
     private static int port;
-    private static String registry;
+    private static String registryURL;
     
     private static void parseArgs (String args[]) { 
         // process flags
@@ -28,7 +30,7 @@ public class VotingServer {
                     i += 2;
                     break;
                 case 'r':
-                    registry = args[i + 1];
+                    registryURL = args[i + 1];
                     i += 2;
                     break;
                 default:
@@ -44,27 +46,39 @@ public class VotingServer {
             registry.list();
         } catch (RemoteException re) {
             System.out.println("Cannot find registry at port " + port);
-            Registry registry = LocateRegistry.createRegistry(port);
+            LocateRegistry.createRegistry(port);
             System.out.println("Registry created at " + port);
         }
-        
+    }
+
+    private static void listRegistry () throws RemoteException, MalformedURLException {
+        System.out.println("Registry at " + registryURL + " contains:");
+        String names[] = Naming.list(registryURL);
+        for (int i = 0; i < names.length; i++)
+            System.out.println(names[i]);
     }
 
     public static void main (String args[]) {
         parseArgs(args);
         if (DEBUG) {
              System.out.println("Port: " + port);
-            System.out.println("IP Address: " + registry);
+            System.out.println("IP Address: " + registryURL);
             System.out.println("done");
         }
 
         try {
             VotingImplementation vi = new VotingImplementation();
+            startRegistry();
+            registryURL = "rmi://localhost:" + port + "/voting";
+
+            Naming.rebind(registryURL, vi);
+            listRegistry();
+            System.out.println("Server ready.");
         }
-        catch (RemoteException re) {
+        catch (Exception re) {
             re.getCause();
             re.printStackTrace();
+            return;
         }
-
     } // end main
 }
