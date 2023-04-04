@@ -2,7 +2,11 @@
 Create a server/client voting system using the java rmi framework
 
 ## Running the server/client
-### VotingServer
+### Server
 ```
-java VotingServer [-p | portNumber] [-r | registryURL]
+java VotingServer [-p] <portNumber>
+```
+### Client
+```
+java VotingClient [-p] <portNumber> [-h] <hostName>
 ```
