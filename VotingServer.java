@@ -8,12 +8,17 @@ import java.rmi.*;
 /*
  * This class is the server to host the pull using java
  * rmi remote objects
- * Use VotingServer [port] [InetAddress] []
+ * Use VotingServer [port] [] []
  */
 public class VotingServer {
     private static boolean DEBUG = true;
     private static int port;
     private static String registryURL;
+    private static int yesCount = 0, 
+                        noCount = 0, 
+                        dontCareCount = 0, 
+                        totalBallotsReceived = 0;
+    private static String topic = "Are you graduating ths semeser?";
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in) 
     );
@@ -68,6 +73,41 @@ public class VotingServer {
         String names[] = Naming.list(registryURL);
         for (int i = 0; i < names.length; i++)
             System.out.println(names[i]);
+    }
+
+    public static int getYesCount () {
+        return yesCount;
+    }
+
+    public static int getNoCount () {
+        return noCount;
+    }
+
+    public static int getDontCareCount () {
+        return dontCareCount;
+    }
+
+    public static void castYesBallot () {
+        yesCount++;
+        totalBallotsReceived++;
+    }
+
+    public static void castNoBallot () {
+        noCount++;
+        totalBallotsReceived++;
+    }
+
+    public static void castDontCareBallot () {
+        dontCareCount++;
+        totalBallotsReceived++;
+    }
+
+    public static int getTotalBallotsReceived () {
+        return totalBallotsReceived;
+    }
+
+    public static String getTopic () {
+        return topic;
     }
 
     public static void main (String args[]) {
