@@ -6,7 +6,23 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
         super();
     }
 
-    public String sayHello(String phrase) throws RemoteException{
+    public String sayHello (String phrase) throws RemoteException{
         return "Hello, " + phrase;
+    }
+
+    public int getYesCount () throws RemoteException {
+        return VotingServer.getYesCount();
+    }
+
+    public int getNoCount () throws RemoteException {
+        return VotingServer.getNoCount();
+    }
+
+    public int getDontCareCount () throws RemoteException {
+        return VotingServer.getDontCareCount();
+    }
+
+    public int getTotalBallotsReceived () throws RemoteException {
+        return VotingServer.getTotalBallotsReceived();
     }
 }
