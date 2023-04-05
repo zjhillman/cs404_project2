@@ -54,6 +54,33 @@ public class VotingClient {
         }   
     }
 
+    private static void poll (VotingInterface vi) {
+        try {
+            String topic = vi.getTopic() + "\n";
+            String instructions = vi.getPollInstructions();
+            System.out.println(topic + instructions);
+            String input = stdIn.readLine();
+
+            switch (input) {
+                case "1":
+                    vi.castYesVote();
+                    break;
+                case "2":
+                    vi.castNoVote();
+                    break;
+                case "3":
+                    vi.castDontCareVote();
+                    break;
+                case ".":
+                    return;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main (String args[]) {
         parseArgs(args);
         if (DEBUG) {
@@ -67,9 +94,22 @@ public class VotingClient {
             VotingInterface vi = (VotingInterface) Naming.lookup(registryURL);
             System.out.println("Established connection to " + registryURL);
 
-            String message = vi.sayHello("$uicideboy$");
+            // greet
+            System.out.println("What is your name?");
+            String name = stdIn.readLine();
+            String message = vi.sayHello(name);
             System.out.println("VotingServer: " + message);
 
+            // state topic, ask to cast ballot
+            message = vi.getTopic();
+            System.out.println("Today's topic is: '" + message +"'");
+            System.out.println("Do you wish to participate in the poll?");
+            String response = stdIn.readLine();
+            if (response.toLowerCase().equals("yes"))
+                poll(vi);
+
+
+            // loop to view results until client disconnects
             while (true) {
                 System.out.println("Please choose one of the options below");
                 System.out.println("[1] Get the number of yes votes");

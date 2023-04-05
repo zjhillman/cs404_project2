@@ -18,6 +18,7 @@ public class VotingServer {
                         noCount = 0, 
                         dontCareCount = 0, 
                         totalBallotsReceived = 0;
+    private static String topic = "Are you graduating ths semeser?";
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in) 
     );
@@ -86,8 +87,27 @@ public class VotingServer {
         return dontCareCount;
     }
 
+    public static void castYesBallot () {
+        yesCount++;
+        totalBallotsReceived++;
+    }
+
+    public static void castNoBallot () {
+        noCount++;
+        totalBallotsReceived++;
+    }
+
+    public static void castDontCareBallot () {
+        dontCareCount++;
+        totalBallotsReceived++;
+    }
+
     public static int getTotalBallotsReceived () {
         return totalBallotsReceived;
+    }
+
+    public static String getTopic () {
+        return topic;
     }
 
     public static void main (String args[]) {
