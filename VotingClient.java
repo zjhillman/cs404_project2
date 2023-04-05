@@ -65,12 +65,11 @@ public class VotingClient {
         try {
             registryURL = "rmi://" + hostName + ":" + rmiPort + "/voting";
             VotingInterface vi = (VotingInterface) Naming.lookup(registryURL);
-            System.out.println("Established conncetion to " + registryURL);
+            System.out.println("Established connection to " + registryURL);
 
             String message = vi.sayHello("$uicideboy$");
             System.out.println("VotingClient: " + message);
         } catch (Exception e) {
-            e.getCause();
             e.printStackTrace();
             return;
         }
