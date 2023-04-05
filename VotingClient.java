@@ -58,7 +58,7 @@ public class VotingClient {
         try {
             String topic = vi.getTopic() + "\n";
             String instructions = vi.getPollInstructions();
-            System.out.println(topic + instructions);
+            System.out.println("\n" + topic + instructions);
             String input = stdIn.readLine();
 
             switch (input) {
@@ -76,6 +76,7 @@ public class VotingClient {
                 default:
                     break;
             }
+            System.out.println("Vote submitted\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,7 +99,7 @@ public class VotingClient {
             System.out.println("What is your name?");
             String name = stdIn.readLine();
             String message = vi.sayHello(name);
-            System.out.println("VotingServer: " + message);
+            System.out.println("\nVotingServer: " + message);
 
             // state topic, ask to cast ballot
             message = vi.getTopic();
