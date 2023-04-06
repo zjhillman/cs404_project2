@@ -10,6 +10,8 @@ public interface VotingInterface extends Remote {
 
     public String getPollInstructions () throws RemoteException;
 
+    public String getResultsInstructions () throws RemoteException;
+
     public int getYesCount () throws RemoteException;
 
     public int getNoCount () throws RemoteException;

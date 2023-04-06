@@ -1,5 +1,8 @@
 import java.rmi.*;
 import java.rmi.server.*;
+import java.text.SimpleDateFormat;
+import java.text.Format;
+import java.util.*;
 
 public class VotingImplementation extends UnicastRemoteObject implements VotingInterface {
     public VotingImplementation () throws RemoteException {
@@ -17,10 +20,21 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
     public String getPollInstructions () throws RemoteException {
         String option1 = "[1] Yes\n";
         String option2 = "[2] No\n";
-        String option3 = "[3] Don't Care (See Results)\n";
-        String option4 = "[.] Exit";
-        String options = option1 + option2 + option3 + option4;
-        return options;
+        String option3 = "[.] Exit";
+        return option1 + option2 + option3;
+    }
+
+    public String getResultsInstructions () throws RemoteException{
+        Format format = new SimpleDateFormat("HH:mm:ss");
+        String time = format.format(new Date());
+
+        String option1 = "As of " + time + " the total number of votes is: " + getTotalBallotsReceived() + "\n";
+        String option2 = "Please choose one of the options below\n";
+        String option3 = "[1] Get the number of yes votes\n";
+        String option4 = "[2] Get the number of no votes\n";
+        String option5 = "[3] Get the number of non voters\n";
+        String option6 = "[.] Exit";
+        return option1 +option2 + option3 + option4 + option5 + option6;
     }
 
     public int getYesCount () throws RemoteException {
