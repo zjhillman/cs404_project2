@@ -6,6 +6,7 @@ public class VotingClient {
     private static int rmiPort;
     private static String hostName;
     private static String registryURL;
+    private static String usersName;
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in)
     );
@@ -18,20 +19,26 @@ public class VotingClient {
             String arg = args[i];
             char flag = arg.charAt(1);
             
-            switch (flag) {
-                case 'p':
-                    rmiPort = Integer.parseInt(args[i+1]);
-                    i += 2;
-                    pSet = true;
-                    break;
-                case 'h':
-                    hostName = args[i + 1];
-                    i += 2;
-                    hSet = true;
-                    break;
-                default:
-                    i++;
-                    break;
+            try {
+                switch (flag) {
+                    case 'p':
+                        rmiPort = Integer.parseInt(args[i+1]);
+                        i += 2;
+                        pSet = true;
+                        break;
+                    case 'h':
+                        hostName = args[i + 1];
+                        i += 2;
+                        hSet = true;
+                        break;
+                    case 'n':
+                        usersName = stdIn.readLine();
+                    default:
+                        i++;
+                        break;
+                }
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
             }
         }
 
@@ -87,7 +94,7 @@ public class VotingClient {
         if (DEBUG) {
             System.out.println("Port: " + rmiPort);
             System.out.println("Host Name: " + hostName);
-            System.out.println("done");
+            System.out.println("cla parsed");
         }
 
         try {
@@ -97,9 +104,9 @@ public class VotingClient {
 
             // greet
             System.out.println("What is your name?");
-            String name = stdIn.readLine();
+            usersName = stdIn.readLine();
             String message = vi.sayHello(name);
-            System.out.println("\nVotingServer: " + message);
+            System.out.println("\n" + message + ",");
 
             // state topic, ask to cast ballot
             message = vi.getTopic();
