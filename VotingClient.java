@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /*
  * VotingClient
- * v0.4.0
+ * v0.4.5
  */
 public class VotingClient {
     private static boolean DEBUG = false;
@@ -13,6 +13,7 @@ public class VotingClient {
     private static String usersName;
     private static String registryURL;
     private static VotingInterface vi;
+    private static boolean running;
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in)
     );
@@ -79,6 +80,17 @@ public class VotingClient {
         }
     }
 
+    private static void connect () {
+        try {
+            registryURL = "rmi://" + hostName + ":" + rmiPort + "/voting";
+            vi = (VotingInterface) Naming.lookup(registryURL);
+            System.out.println("Established connection to " + registryURL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     private static void joinPoll () {
         ArrayList <String> yesCommands = new ArrayList<String>();
         yesCommands.add("yes");
@@ -113,7 +125,7 @@ public class VotingClient {
                     properResponse = true;
                 }
                 else {
-                    System.out.println("Command not understood, please try again");
+                    System.out.println("\nCommand not understood, please try again");
                     properResponse = false;
                 }
             } while (!properResponse);
@@ -141,17 +153,18 @@ public class VotingClient {
                     vi.castDontCareVote();
                     break;
                 case ".":
+                    running = false;
                     return;
                 default:
-                    break;
+                    return;
             }
-            System.out.println("Vote submitted\n");
+            System.out.println("\nVote submitted");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean getResult () {
+    private static void getResult () {
         try {
             String message = vi.getResultsInstructions();
             System.out.println(message);
@@ -176,32 +189,29 @@ public class VotingClient {
                     System.out.println("\nTotal votes: " + fromServer);
                     break;
                 case ".":
-                    return false;
+                    running = false;
+                    break;
                 default:
                     System.out.println("\nInvalid input");
                     break;
             }
         } catch (Exception e) {
+            running = false;
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     public static void main (String args[]) {
         parseArgs(args);
 
         try {
-            registryURL = "rmi://" + hostName + ":" + rmiPort + "/voting";
-            vi = (VotingInterface) Naming.lookup(registryURL);
-            System.out.println("Established connection to " + registryURL);
-
+            running = true;
+            connect();
             joinPoll();
 
             // loop to view results until client disconnects
-            boolean running = true;
             while (running) {
-                running = getResult();
+                getResult();
             }
         } catch (Exception e) {
             e.printStackTrace();
