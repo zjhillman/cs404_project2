@@ -19,8 +19,17 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
         String option2 = "[2] No\n";
         String option3 = "[3] Don't Care (See Results)\n";
         String option4 = "[.] Exit";
-        String options = option1 + option2 + option3 + option4;
-        return options;
+        return option1 + option2 + option3 + option4;
+    }
+
+    public String getResultsInstructions () throws RemoteException{
+        String option1 = "Please choose one of the options below\n";
+        String option2 = "[1] Get the number of yes votes\n";
+        String option3 = "[2] Get the number of no votes\n";
+        String option4 = "[3] Get the number of don't care votes\n";
+        String option5 = "[4] Get the total number of votes\n";
+        String option6 = "[.] Exit";
+        return option1 + option2 + option3 + option4 + option5 + option6;
     }
 
     public int getYesCount () throws RemoteException {
