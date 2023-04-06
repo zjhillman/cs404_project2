@@ -20,9 +20,8 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
     public String getPollInstructions () throws RemoteException {
         String option1 = "[1] Yes\n";
         String option2 = "[2] No\n";
-        String option3 = "[3] Don't Care (See Results)\n";
-        String option4 = "[.] Exit";
-        return option1 + option2 + option3 + option4;
+        String option3 = "[.] Exit";
+        return option1 + option2 + option3;
     }
 
     public String getResultsInstructions () throws RemoteException{
@@ -33,7 +32,7 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
         String option2 = "Please choose one of the options below\n";
         String option3 = "[1] Get the number of yes votes\n";
         String option4 = "[2] Get the number of no votes\n";
-        String option5 = "[3] Get the number of don't care votes\n";
+        String option5 = "[3] Get the number of non voters\n";
         String option6 = "[.] Exit";
         return option1 +option2 + option3 + option4 + option5 + option6;
     }

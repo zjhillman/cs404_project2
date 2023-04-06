@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /*
  * VotingClient
- * v0.4.5
+ * v0.4.6
  */
 public class VotingClient {
     private static boolean DEBUG = false;
@@ -114,7 +114,7 @@ public class VotingClient {
     
             boolean properResponse = true;
             do {
-                System.out.println("Do you wish to participate in the poll?");
+                System.out.println("Do you wish to participate in the poll? (You see the results regardless)");
                 String response = stdIn.readLine();
                 if (yesCommands.contains(response)) {
                     poll();
@@ -122,6 +122,7 @@ public class VotingClient {
                 }
                 else if (noCommands.contains(response)) {
                     System.out.println("\nYou chose not to particpate in the poll");
+                    vi.castDontCareVote();
                     properResponse = true;
                 }
                 else {
@@ -148,9 +149,6 @@ public class VotingClient {
                     break;
                 case "2":
                     vi.castNoVote();
-                    break;
-                case "3":
-                    vi.castDontCareVote();
                     break;
                 case ".":
                     running = false;
@@ -182,7 +180,7 @@ public class VotingClient {
                     break;
                 case "3":
                     fromServer = vi.getDontCareCount();
-                    System.out.println("\nNumber of don't care votes: " + fromServer);
+                    System.out.println("\nNumber of people who didn't vote: " + fromServer);
                     break;
                 case ".":
                     running = false;
