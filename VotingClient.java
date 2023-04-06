@@ -184,10 +184,6 @@ public class VotingClient {
                     fromServer = vi.getDontCareCount();
                     System.out.println("\nNumber of don't care votes: " + fromServer);
                     break;
-                case "4":
-                    fromServer = vi.getTotalBallotsReceived();
-                    System.out.println("\nTotal votes: " + fromServer);
-                    break;
                 case ".":
                     running = false;
                     break;

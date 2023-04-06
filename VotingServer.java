@@ -2,8 +2,12 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.rmi.server.RemoteServer;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.*;
+import java.text.SimpleDateFormat;
+import java.text.Format;
+import java.util.Date;
 
 /*
  * This class is the server to host the pull using java
@@ -18,6 +22,7 @@ public class VotingServer {
                         noCount = 0, 
                         dontCareCount = 0, 
                         totalBallotsReceived = 0;
+    private static VotingImplementation vi;
     private static String topic = "Are you graduating ths semeser?";
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in) 
@@ -54,7 +59,9 @@ public class VotingServer {
             }
         } catch (IOException ioe) { 
             System.out.println("Invalid input");
-        }  
+        }
+        if (DEBUG)
+            System.out.println("Port: " + port);
     }
 
     private static void startRegistry () throws RemoteException {
@@ -88,18 +95,42 @@ public class VotingServer {
     }
 
     public static void castYesBallot () {
-        yesCount++;
-        totalBallotsReceived++;
+        try {
+            Format format = new SimpleDateFormat("HH:mm:ss");
+            String clientHost = RemoteServer.getClientHost();
+            String dateReceived = format.format(new Date());
+            yesCount++;
+            totalBallotsReceived++;
+            System.out.println("[" + dateReceived + "] " + clientHost + " has cast a yes ballot");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void castNoBallot () {
-        noCount++;
-        totalBallotsReceived++;
+    public static void castNoBallot () {                         
+        try {
+            Format format = new SimpleDateFormat("HH:mm:ss");
+            String clientHost = RemoteServer.getClientHost();
+            String dateReceived = format.format(new Date());
+            noCount++;
+            totalBallotsReceived++;
+            System.out.println("[" + dateReceived + "] " + clientHost + " has cast a no ballot");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void castDontCareBallot () {
-        dontCareCount++;
-        totalBallotsReceived++;
+        try {
+            Format format = new SimpleDateFormat("HH:mm:ss");
+            String clientHost = RemoteServer.getClientHost();
+            String dateReceived = format.format(new Date());
+            dontCareCount++;
+            totalBallotsReceived++;
+            System.out.println("[" + dateReceived + "] " + clientHost + " has cast a dont care ballot");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static int getTotalBallotsReceived () {
@@ -112,11 +143,9 @@ public class VotingServer {
 
     public static void main (String args[]) {
         parseArgs(args);
-        if (DEBUG)
-            System.out.println("Port: " + port);
 
         try {
-            VotingImplementation vi = new VotingImplementation();
+            vi = new VotingImplementation();
             startRegistry();
             registryURL = "rmi://localhost:" + port + "/voting";
 
