@@ -8,5 +8,5 @@ java VotingServer [-p] <portNumber>
 ```
 ### Client
 ```
-java VotingClient [-p] <portNumber> [-h] <hostName>
+java VotingClient [-p] <portNumber> [-h] <hostName> [-n] <name>
 ```
