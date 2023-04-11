@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class login {
+public class Login {
     private static JFrame frame = new JFrame("LoginServices.exe");
     private static int width = 400;
     private static int height = 250;
