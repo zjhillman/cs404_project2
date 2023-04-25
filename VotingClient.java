@@ -114,7 +114,7 @@ public class VotingClient {
     
             boolean properResponse = true;
             do {
-                System.out.println("Do you wish to participate in the poll? (You see the results regardless)");
+                System.out.println("Do you wish to participate in the poll?\n(You may see the results regardless)");
                 String response = stdIn.readLine();
                 if (yesCommands.contains(response)) {
                     poll();
