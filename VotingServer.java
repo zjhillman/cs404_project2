@@ -15,7 +15,7 @@ import java.util.Date;
  * Use VotingServer [port] [] []
  */
 public class VotingServer {
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
     private static int port;
     private static String registryURL;
     private static int yesCount = 0, 
@@ -154,7 +154,6 @@ public class VotingServer {
             System.out.println("Server ready.");
         }
         catch (Exception e) {
-            e.getCause();
             e.printStackTrace();
             return;
         }
