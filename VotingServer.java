@@ -29,10 +29,16 @@ public class VotingServer {
     );
     
     private static void parseArgs (String args[]) {
-        boolean pSet = false;
+        // process help command
+        if (args[0].equalsIgnoreCase("--help")) {
+            System.out.println("Please enter one of the following commands:");
+            System.out.println("-p    Port Number, specifies the port used by the server");
+            System.exit(0);
+        }
 
         // process flags
         int i = 0;
+        boolean pSet = false;
         while (i < args.length && args[i].startsWith("-")) {
             String arg = args[i];
             char flag = arg.charAt(1);
