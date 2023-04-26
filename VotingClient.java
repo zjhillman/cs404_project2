@@ -148,7 +148,7 @@ public class VotingClient {
         try {
             String topic = vi.getTopic() + "\n";
             String instructions = vi.getPollInstructions();
-            System.out.println("\n" + topic + instructions);
+            System.out.print("\n" + topic + instructions + "\n: ");
             String input = stdIn.readLine();
 
             switch (input) {
@@ -176,7 +176,7 @@ public class VotingClient {
     private static void getResult () {
         try {
             String message = vi.getResultsInstructions();
-            System.out.println(message);
+            System.out.print(message + "\n: ");
 
             String input = stdIn.readLine();
             switch (input) {
