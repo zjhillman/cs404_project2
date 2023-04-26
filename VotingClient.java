@@ -115,7 +115,7 @@ public class VotingClient {
         try {
             // greet
             String message = vi.sayHello(usersName);
-            System.out.println("\n" + message + ",");
+            System.out.println("\n" + message + ".");
     
             // state topic, ask to cast ballot
             message = vi.getTopic();
@@ -123,7 +123,7 @@ public class VotingClient {
     
             boolean properResponse = true;
             do {
-                System.out.println("Do you wish to participate in the poll?\n(You may see the results regardless)");
+                System.out.print("Do you wish to participate in the poll? (You may see the results regardless)\nYour response (yes/no): ");
                 String response = stdIn.readLine();
                 if (yesCommands.contains(response)) {
                     poll();
@@ -131,7 +131,6 @@ public class VotingClient {
                 }
                 else if (noCommands.contains(response)) {
                     System.out.println("\nYou chose not to particpate in the poll");
-                    vi.castDontCareVote();
                     properResponse = true;
                 }
                 else {
@@ -159,13 +158,16 @@ public class VotingClient {
                 case "2":
                     vi.castNoVote();
                     break;
+                case "3":
+                    vi.castDontCareVote();
+                    break;
                 case ".":
                     running = false;
                     return;
                 default:
                     return;
             }
-            System.out.println("\nVote submitted");
+            System.out.println("\nYour vote has been successfully cast.\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,19 +179,8 @@ public class VotingClient {
             System.out.println(message);
 
             String input = stdIn.readLine();
-            int fromServer = -1;
             switch (input) {
-                case "1":
-                    fromServer = vi.getYesCount();
-                    System.out.println("\nNumber of yes votes: " + fromServer);
-                    break;
-                case "2":
-                    fromServer = vi.getNoCount();
-                    System.out.println("\nNumber of no votes: " + fromServer);
-                    break;
-                case "3":
-                    fromServer = vi.getDontCareCount();
-                    System.out.println("\nNumber of people who didn't vote: " + fromServer);
+                case "":
                     break;
                 case ".":
                     running = false;

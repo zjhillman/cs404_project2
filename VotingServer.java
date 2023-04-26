@@ -23,7 +23,7 @@ public class VotingServer {
                         dontCareCount = 0, 
                         totalBallotsReceived = 0;
     private static VotingImplementation vi;
-    private static String topic = "Are you graduating ths semeser?";
+    private static String topic = "Do you believe A.I. chatbots are dangerous?";
     private static BufferedReader stdIn = new BufferedReader(
         new InputStreamReader(System.in) 
     );

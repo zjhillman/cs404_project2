@@ -20,21 +20,22 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
     public String getPollInstructions () throws RemoteException {
         String option1 = "[1] Yes\n";
         String option2 = "[2] No\n";
-        String option3 = "[.] Exit";
-        return option1 + option2 + option3;
+        String option3 = "[3] Indifferent/Other\n";
+        String option4 = "[.] Exit";
+        return option1 + option2 + option3 + option4;
     }
 
     public String getResultsInstructions () throws RemoteException{
         Format format = new SimpleDateFormat("HH:mm:ss");
         String time = format.format(new Date());
 
-        String option1 = "As of " + time + " the total number of votes is: " + getTotalBallotsReceived() + "\n";
-        String option2 = "Please choose one of the options below\n";
-        String option3 = "[1] Get the number of yes votes\n";
-        String option4 = "[2] Get the number of no votes\n";
-        String option5 = "[3] Get the number of non voters\n";
-        String option6 = "[.] Exit";
-        return option1 +option2 + option3 + option4 + option5 + option6;
+        String result1 = "As of " + time + ", " + getTotalBallotsReceived() + " votes have been cast\n";
+        String result2 = "with " + getYesCount() + " yes vote(s), ";
+        String result3 = getNoCount() + " no vote(s), and ";
+        String result4 = getDontCareCount() + " voters who were indifferent.\n";
+        String option1 = "[ENTER] Refresh the results\n";
+        String option2 = "[.] Exit";
+        return result1 + result2 + result3 + result4 + option1 + option2;
     }
 
     public int getYesCount () throws RemoteException {
