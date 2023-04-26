@@ -156,6 +156,7 @@ public class VotingClient {
             String instructions = vi.getPollInstructions();
             System.out.print("\n" + topic + instructions + "\n:");
             String input = stdIn.readLine();
+            System.out.println();
 
             switch (input) {
                 case "1":
@@ -183,8 +184,9 @@ public class VotingClient {
         try {
             String message = vi.getResultsInstructions();
             System.out.print(message + "\n:");
-
             String input = stdIn.readLine();
+            System.out.println();
+            
             switch (input) {
                 case "":
                     break;
