@@ -35,26 +35,32 @@ public class VotingClient {
             String arg = args[i];
             char flag = arg.charAt(1);
             
-            switch (flag) {
-                case 'p':
-                    rmiPort = Integer.parseInt(args[i+1]);
-                    i += 2;
-                    pSet = true;
-                    break;
-                case 'h':
-                    hostName = args[i + 1];
-                    i += 2;
-                    hSet = true;
-                    break;
-                case 'n':
-                    usersName = args[i + 1];
-                    i += 2;
-                    nSet = true;
-                    break;
-                default:
-                    i++;
-                    break;
+            try {
+                switch (flag) {
+                    case 'p':
+                        rmiPort = Integer.parseInt(args[i+1]);
+                        i += 2;
+                        pSet = true;
+                        break;
+                    case 'h':
+                        hostName = args[i + 1];
+                        i += 2;
+                        hSet = true;
+                        break;
+                    case 'n':
+                        usersName = args[i + 1];
+                        i += 2;
+                        nSet = true;
+                        break;
+                    default:
+                        i++;
+                        break;
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Incorrect formatting of command line arguments");
+                i++;
             }
+            
         }
 
         try {

@@ -43,16 +43,22 @@ public class VotingServer {
             String arg = args[i];
             char flag = arg.charAt(1);
             
-            switch (flag) {
-                case 'p':
-                    port = Integer.parseInt(args[i+1]);
-                    i += 2;
-                    pSet = true;
-                    break;
-                default:
-                    i++;
-                    break;
+            try {
+                switch (flag) {
+                    case 'p':
+                        port = Integer.parseInt(args[i+1]);
+                        i += 2;
+                        pSet = true;
+                        break;
+                    default:
+                        i++;
+                        break;
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Incorrect formatting of command line arguments");
+                i++;
             }
+            
         }
 
         // if an arguement was not already entered
