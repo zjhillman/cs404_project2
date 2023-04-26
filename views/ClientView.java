@@ -1,3 +1,4 @@
+package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -17,10 +18,21 @@ public class ClientView extends JFrame {
         displayPanel.setBackground(Color.WHITE);
 
         
-
+        this.setTitle("hill.net");
         this.add(displayPanel, BorderLayout.NORTH);
         this.add(controlPanel, BorderLayout.SOUTH);
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void showArguements () {
+        JTextField nameField = new JTextField();
+        JTextField portField = new JTextField();
+        JTextField hostField = new JTextField();
+        
+        controlPanel.add(nameField);
+        controlPanel.add(portField);
+        controlPanel.add(hostField);
+        this.repaint();
     }
 }
