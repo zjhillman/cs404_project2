@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class ClientView extends JFrame {
     private JPanel displayPanel = new JPanel();
-    private JPanel namePanel = new JPanel();
+    private JPanel controlPanel = new JPanel();
     private JTextArea screen = new JTextArea(5, 20);
     private static int width = 400, height = 250;
 
