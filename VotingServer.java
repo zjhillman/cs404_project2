@@ -30,7 +30,7 @@ public class VotingServer {
     
     private static void parseArgs (String args[]) {
         // process help command
-        if (args[0].equalsIgnoreCase("--help")) {
+        if (args.length != 0 && args[0].equalsIgnoreCase("--help")) {
             System.out.println("Please enter one of the following commands:");
             System.out.println("-p    Port Number, specifies the port used by the server");
             System.exit(0);

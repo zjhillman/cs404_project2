@@ -20,7 +20,7 @@ public class VotingClient {
 
     private static void parseArgs (String args[]) { 
         // process help command
-        if (args[0].equalsIgnoreCase("--help")) {
+        if (args.length != 0 && args[0].equalsIgnoreCase("--help")) {
             System.out.println("Please enter one of the following commands:");
             System.out.println("-p    Port Number, specifies the port used to connect to the server");
             System.out.println("-h    HostName, specifies the name used by the server's rmi address");

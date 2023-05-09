@@ -27,14 +27,35 @@ public class VotingImplementation extends UnicastRemoteObject implements VotingI
 
     public String getResultsInstructions () throws RemoteException{
         Format format = new SimpleDateFormat("HH:mm:ss");
-        String time = format.format(new Date());
+        String time = format.format(new Date()),
+               result1, result2, result3, result4;
+        int totalVotes = getTotalBallotsReceived(),
+            yesVotes = getYesCount(), 
+            noVotes = getNoCount(), 
+            dontCareVotes = getDontCareCount();
 
-        String result1 = "As of " + time + ", " + getTotalBallotsReceived() + " votes have been cast\n";
-        String result2 = "with " + getYesCount() + " yes vote(s), ";
-        String result3 = getNoCount() + " no vote(s), and ";
-        String result4 = getDontCareCount() + " voters who were indifferent.\n";
+        if (totalVotes == 1)
+            result1 = "As of " + time + ", " + totalVotes + " vote has been cast\n";
+        else
+            result1 = "As of " + time + ", " + totalVotes + " votes have been cast\n";
+        if (yesVotes == 1)
+            result2 = "with " + yesVotes + " yes vote, ";
+        else
+            result2 = "with " + yesVotes + " yes votes, ";
+        if (noVotes == 1)
+            result3 = noVotes + " no vote, and ";
+        else
+            result3 = noVotes + " no votes, and ";
+        if (dontCareVotes == 1)
+            result4 = dontCareVotes + " voter who was indifferent.\n";
+        else
+            result4 = dontCareVotes + " voters who were indifferent.\n";
+            
         String option1 = "[ENTER] Refresh the results\n";
         String option2 = "[.] Exit";
+
+
+
         return result1 + result2 + result3 + result4 + option1 + option2;
     }
 
